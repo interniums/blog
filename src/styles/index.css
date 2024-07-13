@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .create_page_input {
+    @apply border rounded p-2 mt-2;
+  }
+
+  .create_page_button {
+    @apply border rounded p-2 mt-2;
+  }
+
+  .create_page_container {
+    @apply grid border p-4 rounded;
+  }
+}
+
 * {
   margin: 0;
   box-sizing: border-box;

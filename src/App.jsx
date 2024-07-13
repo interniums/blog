@@ -3,6 +3,7 @@ import Layout from './components/Layout'
 import HomePage from './components/home-page/HomePage'
 import Login from './components/Login'
 import Create from './components/Create'
+import CreateCategory from './components/CreateCategory'
 
 function App() {
   return (
@@ -11,10 +12,14 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path="login" element={<Login />} />
         <Route path="profile" element="" />
-        <Route path="category" element="">
+        <Route path="category">
+          <Route index element="" />
           <Route path="category/:id" element="" />
         </Route>
-        <Route path="create" element={<Create />} />
+        <Route path="create">
+          <Route index element={<Create />} />
+          <Route path="category" element={<CreateCategory />} />
+        </Route>
       </Route>
     </Routes>
   )
