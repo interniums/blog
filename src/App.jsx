@@ -1,7 +1,8 @@
 import { Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
-import HomePage from './components/HomePage'
+import HomePage from './components/home-page/HomePage'
 import Login from './components/Login'
+import Create from './components/Create'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="category" element="">
           <Route path="category/:id" element="" />
         </Route>
+        <Route path="create" element={<Create />} />
       </Route>
     </Routes>
   )
