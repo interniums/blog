@@ -41,7 +41,7 @@ export default function CreateCategory() {
         />
         <button
           onClick={fetchCategory}
-          className="create_page_button bg-green-100"
+          className="hover:bg-green-300 create_page_button bg-green-100"
         >
           Submit
         </button>

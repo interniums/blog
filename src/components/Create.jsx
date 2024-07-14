@@ -10,8 +10,11 @@ export default function Create() {
     img: [],
   })
   const [categories, setCategories] = useState([])
+  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(true)
   // console.log(data)
-  console.log(categories)
+  // console.log(categories)
+  // console.log(error)
 
   useEffect(() => {
     const fetchCategory = async () => {
@@ -20,8 +23,12 @@ export default function Create() {
           destination: 'create/category',
         })
         setCategories(message)
+        setError(null)
       } catch (err) {
+        setError(err.message)
+        setCategories(null)
       } finally {
+        setLoading(false)
       }
     }
     fetchCategory()
@@ -76,13 +83,15 @@ export default function Create() {
               handleData(e)
             }}
           />
-          <datalist id="categories">
-            {categories.map((item) => (
-              <option value={item.name} key={item._id}>
-                {item.name}
-              </option>
-            ))}
-          </datalist>
+          {categories.length > 0 ? (
+            <datalist id="categories">
+              {categories?.map((item) => (
+                <option value={item.name} key={item._id}>
+                  {item.name}
+                </option>
+              ))}
+            </datalist>
+          ) : null}
         </div>
         {/* add content */}
         <div className="create_page_container">
@@ -112,7 +121,10 @@ export default function Create() {
             }}
           />
         </div>
-        <button className="create_page_button bg-green-100" onClick={fetchData}>
+        <button
+          className="hover:bg-green-300 create_page_button bg-green-100"
+          onClick={fetchData}
+        >
           Submit
         </button>
       </form>

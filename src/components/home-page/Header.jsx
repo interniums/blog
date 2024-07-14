@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import Login from '../auth/Login'
 
 export default function Header() {
   return (
@@ -22,6 +23,11 @@ export default function Header() {
             <Link>
               <button className="hover:opacity-40 ease-in-out duration-300">
                 CONTACT
+              </button>
+            </Link>
+            <Link to="login">
+              <button className="hover:opacity-40 ease-in-out duration-300">
+                LOGIN
               </button>
             </Link>
           </nav>
