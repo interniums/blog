@@ -1,12 +1,12 @@
-import { useRef, useState, useEffect, useContext } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { AuthContext } from '../../context/AuthProvider'
 import axios from '../../api/axios'
+import useAuth from '../../hooks/useAuth'
 
 const LOGIN_URL = '/login'
 
 export default function Login() {
-  const { setAuth } = useContext(AuthContext)
+  const { setAuth } = useAuth()
   const emailRef = useRef()
   const errRef = useRef()
 
@@ -14,6 +14,7 @@ export default function Login() {
   const [pwd, setPwd] = useState('')
   const [errMsg, setErrMsg] = useState('')
   const [success, setSuccess] = useState('')
+  // console.log(email, pwd)
 
   useEffect(() => {
     emailRef.current.focus()
@@ -25,7 +26,35 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setSuccess(true)
+
+    try {
+      const response = await axios.post(
+        LOGIN_URL,
+        JSON.stringify({ email, password: pwd }),
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      )
+      console.log(JSON.stringify(response?.data))
+      const accessToken = response?.data?.accessToken
+      const admin = response?.data?.admin
+      setAuth({ email, pwd, admin, accessToken })
+      setEmail('')
+      setPwd('')
+      setSuccess(true)
+    } catch (err) {
+      if (!err?.response) {
+        setErrMsg('No server response.')
+      } else if (err.response?.status === 400) {
+        setErrMsg('Missing input data.')
+      } else if (err.response?.status === 401) {
+        setErrMsg('Unauthoraized.')
+      } else {
+        setErrMsg('Login failed.')
+      }
+      errRef.current.focus()
+    }
   }
 
   return (

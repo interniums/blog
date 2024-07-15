@@ -5,6 +5,7 @@ import Login from './components/auth/Login'
 import Create from './components/Create'
 import CreateCategory from './components/CreateCategory'
 import Registration from './components/auth/Registration'
+import RequireAuth from './components/RequireAuth'
 
 function App() {
   return (
@@ -13,14 +14,17 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path="login" element={<Login />} />
         <Route path="registration" element={<Registration />} />
-        <Route path="profile" element="" />
         <Route path="category">
           <Route index element="" />
           <Route path="category/:id" element="" />
         </Route>
-        <Route path="create">
-          <Route index element={<Create />} />
-          <Route path="category" element={<CreateCategory />} />
+
+        <Route element={<RequireAuth />}>
+          <Route path="profile" element="" />
+          <Route path="create">
+            <Route index element={<Create />} />
+            <Route path="category" element={<CreateCategory />} />
+          </Route>
         </Route>
       </Route>
     </Routes>
